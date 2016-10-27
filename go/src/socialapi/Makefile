@@ -33,7 +33,6 @@ PACKAGES = \
 	socialapi/workers/emailnotifier \
 	socialapi/workers/dailyemailnotifier \
 	socialapi/workers/notification \
-	socialapi/workers/pinnedpost \
 	socialapi/workers/realtime \
 	socialapi/workers/migrator \
 	socialapi/workers/sitemap/sitemapfeeder \
@@ -46,10 +45,10 @@ PACKAGES = \
 all: testapi
 
 develop: apidev realtimedev \
-	notificationdev pinnedpostdev algoliaconnectordev \
+	notificationdev algoliaconnectordev \
 	emaildev sitemapdev collaborationdev mailsenderdev topicmoderationdev \
 	teamdev eventsenderdev integrationdev
-minimal: apidev realtimedev pinnedpostdev
+minimal: apidev realtimedev
 default: configure
 
 apidev:
@@ -59,10 +58,6 @@ apidev:
 realtimedev:
 	@echo "$(OK_COLOR)==> Running Realtime Worker $(NO_COLOR)"
 	@$(GOBINDIR)/watcher -run socialapi/workers/cmd/realtime -watch socialapi/workers/realtime/realtime -c $(CONFIG) $(DBG) $(EXTRAS)
-
-pinnedpostdev:
-	@echo "$(OK_COLOR)==> Running PinnedPost Worker $(NO_COLOR)"
-	@$(GOBINDIR)/watcher -run socialapi/workers/cmd/pinnedpost -watch socialapi/workers/pinnedpost -c $(CONFIG) $(DBG) $(EXTRAS)
 
 algoliaconnectordev:
 	@echo "$(OK_COLOR)==> Running TopicIndex Worker $(NO_COLOR)"
